@@ -1,0 +1,54 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NTCOM_WPF.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="isUdp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="baudRate" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">9600</Value>
+    </Setting>
+    <Setting Name="savedPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="csvLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="csvFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ntcom.csv</Value>
+    </Setting>
+    <Setting Name="isConnecting" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="name1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n1</Value>
+    </Setting>
+    <Setting Name="name2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n2</Value>
+    </Setting>
+    <Setting Name="name3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n3</Value>
+    </Setting>
+    <Setting Name="name4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n4</Value>
+    </Setting>
+    <Setting Name="name5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n5</Value>
+    </Setting>
+    <Setting Name="name6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n6</Value>
+    </Setting>
+    <Setting Name="name7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n7</Value>
+    </Setting>
+    <Setting Name="name8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n8</Value>
+    </Setting>
+    <Setting Name="name9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n9</Value>
+    </Setting>
+    <Setting Name="name10" Type="System.String" Scope="User">
+      <Value Profile="(Default)">n10</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
