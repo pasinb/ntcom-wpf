@@ -188,6 +188,11 @@
                          />
             </Grid>
         </TabItem>
+        <TabItem Header="Log">
+            <Grid Background="#FFE5E5E5">
+                <TextBox Name="logTextBox" Text="{Binding log, Mode=TwoWay}" Margin="0" TextWrapping="Wrap"  IsReadOnly="True"/>
+            </Grid>
+        </TabItem>
     </TabControl>
 
 

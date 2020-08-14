@@ -24,7 +24,7 @@ namespace NTCOM_WPF
         public void Server(string address, int port)
         {
             socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.ReuseAddress, true);
-            socket.Bind(new IPEndPoint(IPAddress.Parse(address), port));
+            socket.Bind(new IPEndPoint(IPAddress.Any, port));
             Receive();
         }
 

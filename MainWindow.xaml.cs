@@ -21,6 +21,7 @@ namespace NTCOM_WPF
         private ConnectionManager connectionManager;
 
         public ObservableCollection<DataRow> stateGrid;
+        public string log;
 
         public MainWindow()
         {
@@ -40,11 +41,39 @@ namespace NTCOM_WPF
                 });
             }
             mainGrid.ItemsSource = stateGrid;
+
+            //log ="1111";/
         }
 
         private void HandleOnRecv(RecvMsgEvent e) {
-            Console.WriteLine("received handleOnRecv");
-            Console.WriteLine(e.msg);
+            string m = e.msg;
+
+            Application.Current.Dispatcher.Invoke(new Action(() => {
+                logTextBox.AppendText("RECV: " + m + "\n");
+            }));
+             m = m.Substring(m.Length - 9);
+            if (m.Length == 9 && m.StartsWith(":NT")) {
+               string addrStr =  m.Substring(3, 2);
+                string countStr=  m.Substring(5, 4);
+
+                bool validInt = int.TryParse(m.Substring(3, 2), out int addr);
+                if (validInt && addr > 0 && addr <= 80) {
+                    if (countStr == "TEST")
+                    {
+
+                    }
+                    else {
+
+                        bool validInt2 = int.TryParse(m.Substring(5, 4), out int countInt);
+                        if (validInt2) {
+                            stateGrid[(int)addrStr[0]].data[addr % 8] = countInt.ToString();
+                        }
+                    }
+                }
+            }
+
+            /// if ()
+
         }
 
         private void HandleConnectionChanged(ConnectionChangedEvent e)
@@ -83,7 +112,7 @@ namespace NTCOM_WPF
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            stateGrid[2].data[2] = "shit";
+            // TODO remove
         }
     }
 

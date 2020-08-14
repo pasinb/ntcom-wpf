@@ -43,7 +43,7 @@ namespace NTCOM_WPF
         private bool _isRunning = true;
 
         private SerialPort serial_port;
-        private UDPsocket udp_socket;
+        private UdpClient udp_client;
 
         static bool autoconnecting = false;
 
@@ -61,7 +61,20 @@ namespace NTCOM_WPF
             serial_port.WriteTimeout = 1500;
             serial_port.DataReceived += new SerialDataReceivedEventHandler(OnSerialPortRecv);
 
-            udp_socket = new UDPsocket();
+            udp_client = new UdpClient();
+            udp_client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            udp_client.ExclusiveAddressUse = false;
+            udp_client.Client.Bind(new IPEndPoint(IPAddress.Any, 1470));
+
+            var from = new IPEndPoint(0, 0);
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    var recvBuffer = udp_client.Receive(ref from);
+                    OnRecvMsg(new RecvMsgEvent(Encoding.ASCII.GetString(recvBuffer)));
+                }
+            });
 
             new Thread(TickThread).Start();
         }
@@ -80,7 +93,8 @@ namespace NTCOM_WPF
         {
             if (Convert.ToBoolean(Settings.Default["isUdp"]))
             {
-                udp_socket.Send(msg);
+                byte[] data = Encoding.ASCII.GetBytes(msg);
+                udp_client.Send(data, data.Length);
             }
             else
             {
@@ -112,11 +126,6 @@ namespace NTCOM_WPF
             {
                 if (serial_port.IsOpen) {
                     serial_port.Close();
-                }
-                if (!IsSocketConnected(udp_socket.socket))
-                {
-                    // TODO try catch
-                    udp_socket.Client("127.0.0.1", 1470);
                 }
             }
             else  
