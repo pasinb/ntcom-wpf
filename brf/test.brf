@@ -1,0 +1,10 @@
+# Module IP address - one of the modules on the network
+IP=127.0.0.1
+# Module net mask – your’s PC mask
+MASK=255.255.255.255
+# Module port – Module‘s receiveing UDP port
+PORT=1470
+# Local port - PC outgoing UDP port
+LOCALPORT=1471
+# Sent data
+DATA=:NT01TEST

@@ -51,26 +51,39 @@ namespace NTCOM_WPF
             Application.Current.Dispatcher.Invoke(new Action(() => {
                 logTextBox.AppendText("RECV: " + m + "\n");
             }));
-             m = m.Substring(m.Length - 9);
-            if (m.Length == 9 && m.StartsWith(":NT")) {
-               string addrStr =  m.Substring(3, 2);
-                string countStr=  m.Substring(5, 4);
+            int ntIdx = m.IndexOf(":NT");
+            if (ntIdx >= 0) {
+                m = m.Substring(ntIdx).Trim();
+                if (m.Length == 9)
+                {
+                    string addrStr = m.Substring(3, 2);
+                    string countStr = m.Substring(5, 4);
 
-                bool validInt = int.TryParse(m.Substring(3, 2), out int addr);
-                if (validInt && addr > 0 && addr <= 80) {
-                    if (countStr == "TEST")
+                    bool validInt = int.TryParse(addrStr, out int addr);
+                    if (validInt && addr > 0 && addr <= 80)
                     {
+                        //Console.WriteLine("valid");
+                        if (countStr == "TEST")
+                        {
+                            //Console.WriteLine("test");
+                            stateGrid[(addr - 1) % 8].isRed[(int)Math.Floor((double)((addr - 1) / 8))] = true;
+                        }
+                        else
+                        {
+                            //Console.WriteLine("all valid");
+                            bool validInt2 = int.TryParse(m.Substring(5, 4), out int countInt);
+                            if (validInt2)
+                            {
+                                //Console.WriteLine((addr - 1) % 8);
+                                //Console.WriteLine((int)Math.Floor((double)((addr - 1) / 8)));
 
-                    }
-                    else {
-
-                        bool validInt2 = int.TryParse(m.Substring(5, 4), out int countInt);
-                        if (validInt2) {
-                            stateGrid[(int)addrStr[0]].data[addr % 8] = countInt.ToString();
+                                stateGrid[(addr - 1) % 8].data[(int)Math.Floor((double)((addr - 1) / 8))] = countInt.ToString();
+                            }
                         }
                     }
                 }
             }
+           
 
             /// if ()
 
