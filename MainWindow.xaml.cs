@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
+using System.Security.Cryptography;
 
 namespace NTCOM_WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-
-
-
 
     public partial class MainWindow : Window
     {
@@ -22,6 +26,21 @@ namespace NTCOM_WPF
 
         public ObservableCollection<DataRow> stateGrid;
         public string log;
+
+        Notifier notifier = new Notifier(cfg =>
+        {
+            cfg.PositionProvider = new WindowPositionProvider(
+                parentWindow: Application.Current.MainWindow,
+                corner: Corner.BottomRight,
+                offsetX: 10,
+                offsetY: 10);
+
+            cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(3),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+            cfg.Dispatcher = Application.Current.Dispatcher;
+        });
 
         public MainWindow()
         {
@@ -34,25 +53,39 @@ namespace NTCOM_WPF
             stateGrid = new ObservableCollection<DataRow>();
             for (int i = 0; i < 8; i++)
             {
-                stateGrid.Add(new DataRow() { 
-                    index= i+1, 
-                    data = new ObservableCollection<string> { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" }, 
-                    isRed = new ObservableCollection<bool> { false,false,false,false,false,false,false,false,false,false } 
+                stateGrid.Add(new DataRow()
+                {
+                    index = Convert.ToString(i + 1),
+                    data = new ObservableCollection<string> { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" },
+                    isRed = new ObservableCollection<bool> { false, false, false, false, false, false, false, false, false, false }
                 });
             }
+            stateGrid.Add(new DataRow()
+            {
+                index = "Sum: ",
+                data = new ObservableCollection<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
+                isRed = new ObservableCollection<bool> { false, false, false, false, false, false, false, false, false, false }
+            });
+            stateGrid.Add(new DataRow()
+            {
+                index = "Total: ",
+                data = new ObservableCollection<string> { "0", "", "", "", "", "", "", "", "", "" },
+                isRed = new ObservableCollection<bool> { false, false, false, false, false, false, false, false, false, false }
+            });
             mainGrid.ItemsSource = stateGrid;
-
-            //log ="1111";/
         }
 
-        private void HandleOnRecv(RecvMsgEvent e) {
+        private void HandleOnRecv(RecvMsgEvent e)
+        {
             string m = e.msg;
 
-            Application.Current.Dispatcher.Invoke(new Action(() => {
-                logTextBox.AppendText("RECV: " + m + "\n");
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                //logTextBox.AppendText("RECV: " + m + "\n");
             }));
             int ntIdx = m.IndexOf(":NT");
-            if (ntIdx >= 0) {
+            if (ntIdx >= 0)
+            {
                 m = m.Substring(ntIdx).Trim();
                 if (m.Length == 9)
                 {
@@ -62,37 +95,54 @@ namespace NTCOM_WPF
                     bool validInt = int.TryParse(addrStr, out int addr);
                     if (validInt && addr > 0 && addr <= 80)
                     {
-                        //Console.WriteLine("valid");
                         if (countStr == "TEST")
                         {
-                            //Console.WriteLine("test");
                             stateGrid[(addr - 1) % 8].isRed[(int)Math.Floor((double)((addr - 1) / 8))] = true;
                         }
                         else
                         {
-                            //Console.WriteLine("all valid");
-                            bool validInt2 = int.TryParse(m.Substring(5, 4), out int countInt);
+                            bool validInt2 = int.TryParse(countStr, out int countInt);
                             if (validInt2)
                             {
-                                //Console.WriteLine((addr - 1) % 8);
-                                //Console.WriteLine((int)Math.Floor((double)((addr - 1) / 8)));
-
                                 stateGrid[(addr - 1) % 8].data[(int)Math.Floor((double)((addr - 1) / 8))] = countInt.ToString();
+
+                                // compute sum
+                                int[] sum = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                                for (int r = 0; r < 8; r++)
+                                {
+                                    for (int c = 0; c < 10; c++)
+                                    {
+                                        bool valid = int.TryParse(stateGrid[r].data[c], out int v);
+                                        if (valid)
+                                        {
+                                            sum[c] += Convert.ToInt32(v);
+                                        }
+                                    }
+                                };
+                                Console.WriteLine(sum);
+                                int totalSum = sum.Sum();
+                                for (int c = 0; c < 10; c++)
+                                {
+                                    stateGrid[8].data[c] = sum[c].ToString();
+                                }
+                                stateGrid[9].data[0] = totalSum.ToString();
                             }
                         }
                     }
                 }
             }
-           
-
-            /// if ()
-
         }
 
         private void HandleConnectionChanged(ConnectionChangedEvent e)
         {
-            Console.WriteLine("received HandleConnectionChanged");
-            Console.WriteLine(e.desc);
+            if (e.isSuccess)
+            {
+                statusLabel.Content = e.desc;
+            }
+            else
+            {
+                MessageBox.Show(e.desc, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
@@ -103,6 +153,58 @@ namespace NTCOM_WPF
             base.OnClosing(e);
         }
 
+        public void save_to_csv()
+        {
+            String save_dir = Properties.Settings.Default.csvLocation;
+            String save_filename = Properties.Settings.Default.csvFileName;
+        
+            String full_path;
+            if (save_dir == "")
+            {
+                full_path = save_filename;
+            }
+            full_path = String.Format("{0}/{1}", save_dir, save_filename);
+            //if file exist, clear
+            if (File.Exists(full_path))
+            {
+                File.WriteAllText(full_path, "");
+            }
+            //add data to CSV file
+            try
+            {
+                using (StreamWriter sw = File.AppendText(full_path))
+                {
+
+                    sw.WriteLine(String.Format(",{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
+                        Properties.Settings.Default.name1,
+                        Properties.Settings.Default.name2,
+                        Properties.Settings.Default.name3,
+                        Properties.Settings.Default.name4,
+                        Properties.Settings.Default.name5,
+                        Properties.Settings.Default.name6,
+                        Properties.Settings.Default.name7,
+                        Properties.Settings.Default.name8,
+                        Properties.Settings.Default.name9,
+                        Properties.Settings.Default.name10));
+                    for (int r = 0; r < 10; r++)
+                    {
+                        sw.WriteLine(
+                           stateGrid[r].index + "," + string.Join(",", stateGrid[r].data)
+                            );
+                    };
+                }
+                notifier.ShowSuccess("CSV saved");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.GetType() + ": " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // InvalidOperationException occur when table was modified while program is in loop
+                // Occurs when user set the Bridge count number, causing table rows to be modified
+                return;
+            }
+   
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
@@ -111,21 +213,109 @@ namespace NTCOM_WPF
                 Properties.Settings.Default.csvLocation = dialog.SelectedPath;
             }
         }
-
-        private void OnTabSelected(object sender, RoutedEventArgs e)
+        private void listenButton_Click(object sender, RoutedEventArgs e)
         {
-            var tab = sender as TabItem;
-            if (tab != null)
-            {
-               // mainGrid.Items.Refresh();
-                //mainGrid.UpdateLayout();
-               // mainGrid.upd
-            }
+            connectionManager.udpStart();
+        }
+
+        private void stopListenButton_Click(object sender, RoutedEventArgs e)
+        {
+            connectionManager.udpStop();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // TODO remove
+            save_to_csv();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            for (int r = 0; r < 8; r++)
+            {
+                for (int c = 0; c < 10; c++)
+                {
+                    stateGrid[r].isRed[c] = false;
+                }
+            };
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var dialog = new PwdDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    connectionManager.send(":NT00RSET");
+                    notifier.ShowSuccess("Reset message sent");
+                }
+                catch (Exception ee) {
+                    MessageBox.Show(ee.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(mainGrid, "DataGrid");
+            }
+        }
+
+        private void Save_Password_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isPasswordCorrect(oldPwdBox.Password)) {
+                MessageBox.Show("Old password incorrect", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (pwdBox.Password != pwdBoxConfirm.Password) {
+                MessageBox.Show("Password and confirm password does not match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            var pbkdf2 = new Rfc2898DeriveBytes(pwdBox.Password, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            Properties.Settings.Default.password = Convert.ToBase64String(hashBytes);
+            Properties.Settings.Default.Save();
+            oldPwdBox.Password = "";
+            pwdBox.Password = "";
+            pwdBoxConfirm.Password = "";
+            notifier.ShowSuccess("Password set");
+        }
+        public bool isPasswordCorrect(string password)
+        // DUPLICATE CODE IN MAINWINDOW + DIALOG
+        {
+            /* Fetch the stored value */
+            string savedPasswordHash = Properties.Settings.Default.password;
+            if (savedPasswordHash == "1234")
+            {
+                return password == "1234";
+            }
+            /* Extract the bytes */
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            /* Get the salt */
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            /* Compute the hash on the password the user entered */
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            /* Compare the results */
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i])
+                    return false;
+            return true;
         }
     }
 
@@ -149,7 +339,8 @@ namespace NTCOM_WPF
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (System.Convert.ToBoolean(value)) {
+            if (System.Convert.ToBoolean(value))
+            {
                 return (SolidColorBrush)(new BrushConverter().ConvertFrom("#ff9999"));
             }
             return DependencyProperty.UnsetValue;
@@ -163,7 +354,7 @@ namespace NTCOM_WPF
 
     public class DataRow
     {
-        public int index { get; set; }
+        public string index { get; set; }
         public ObservableCollection<string> data { get; set; }
         public ObservableCollection<bool> isRed { get; set; }
 

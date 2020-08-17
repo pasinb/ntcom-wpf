@@ -36,3 +36,8 @@ C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\NTCOM-WPF.csproj.CoreCompileIn
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\NTCOM-WPF.csproj.CopyComplete
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\NTCOM-WPF.exe
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\NTCOM-WPF.pdb
+C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\bin\Debug\ToastNotifications.dll
+C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\bin\Debug\ToastNotifications.Messages.dll
+C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Debug\App.baml
+C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Debug\PwdDialog.g.cs
+C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Debug\PwdDialog.baml

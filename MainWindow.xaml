@@ -6,194 +6,238 @@
         xmlns:local="clr-namespace:NTCOM_WPF"
         xmlns:p="clr-namespace:NTCOM_WPF.Properties"
         mc:Ignorable="d"
-        Title="NTCOM" Height="350" Width="850">
+        Title="NTCOM" Height="400" Width="914">
     <Window.Resources>
         <local:RadioConverter x:Key="RadioConverter" />
         <local:MainWindow x:Key="MainWindow" />
         <local:NameToBrushConverter x:Key="NameToBrushConverter"/>
     </Window.Resources>
-    <TabControl>
-        <TabItem Header ="Data" Selector.Selected="OnTabSelected">
-            <Grid Background="#FFE5E5E5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="75 "/>
-                </Grid.ColumnDefinitions>
-                <DataGrid ColumnWidth="*" Background="#FFFFFFFF"  Name="mainGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <TabControl Margin="0">
+            <TabItem Header ="Data">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid ColumnWidth="*" Background="#FFFFFFFF"  Name="mainGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
                           ItemsSource="{Binding Source=stateGrid}">
-                    <DataGrid.Resources>
-                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
-                            <Setter Property="Background" Value="White" />
-                            <Setter Property="Foreground" Value="Black" />
-                            <Setter Property="BorderBrush" Value="Black"/>
-                            <Setter Property="BorderThickness" Value="1 1 1 1"/>
-                            <Setter Property="Margin" Value="-1,-1,0,0" />
-                            <Setter Property="Width" Value="auto"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="" Binding="{Binding index}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name1}" Binding="{Binding data[0]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[0], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name2}" Binding="{Binding data[1]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[1], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name3}" Binding="{Binding data[2]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[2], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name4}" Binding="{Binding data[3]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[3], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name5}" Binding="{Binding data[4]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[4], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name6}" Binding="{Binding data[5]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[5], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name7}" Binding="{Binding data[6]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[6], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name8}" Binding="{Binding data[7]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[7], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name9}" Binding="{Binding data[8]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[8], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name10}" Binding="{Binding data[9]}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding isRed[9], Converter={StaticResource NameToBrushConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button Content="Print" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" />
-                <Button Content="Test&#xD;&#xA;Reset" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,20,0,0"/>
-                <Button Content="Counter&#xD;&#xA;Reset"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,56,0,0"/>
-                <Button Content="Test" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,115,0,0" Click="Button_Click_1" />
-            </Grid>
-        </TabItem>
-        <TabItem Header="Setting">
-            <Grid Background="#FFE5E5E5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="121*"/>
-                    <ColumnDefinition Width="716*"/>
-                </Grid.ColumnDefinitions>
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="BorderThickness" Value="1 1 1 1"/>
+                                <Setter Property="Margin" Value="-1,-1,0,0" />
+                                <Setter Property="Width" Value="auto"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="" Binding="{Binding index}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name1}" Binding="{Binding data[0]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[0], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name2}" Binding="{Binding data[1]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[1], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name3}" Binding="{Binding data[2]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[2], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name4}" Binding="{Binding data[3]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[3], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name5}" Binding="{Binding data[4]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[4], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name6}" Binding="{Binding data[5]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[5], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name7}" Binding="{Binding data[6]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[6], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name8}" Binding="{Binding data[7]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[7], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name9}" Binding="{Binding data[8]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[8], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name10}" Binding="{Binding data[9]}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding isRed[9], Converter={StaticResource NameToBrushConverter}}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Print" Grid.Column="1" VerticalAlignment="Top" Margin="5,4,2,0" Click="Button_Click_4" />
+                    <Button Content="Test&#xD;&#xA;Reset" Grid.Column="1" VerticalAlignment="Top" Margin="5,29,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_2"/>
+                    <Button Content="Counter&#xD;&#xA;Reset"  Grid.Column="1" VerticalAlignment="Top" Margin="5,70,2,0" HorizontalContentAlignment="Center" Click="Button_Click_3"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Setting">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="121*"/>
+                        <ColumnDefinition Width="716*"/>
+                    </Grid.ColumnDefinitions>
 
-                <RadioButton  Height="23" GroupName="conType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="UDP Network" Margin="28,28,0,0"
+                    <RadioButton x:Name="isUdpRadio" Height="23" GroupName="conType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="UDP Network" Margin="28,28,0,0"
                          IsChecked="{Binding Source={x:Static p:Settings.Default}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=isUdp, Converter={StaticResource RadioConverter}, ConverterParameter=True }" VerticalContentAlignment="Center" Grid.ColumnSpan="2"    />
-                <RadioButton Content="COM Port" GroupName="conType" Margin="28,67,0,0" Width="98" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    <RadioButton x:Name="isComRadio" Content="COM Port" GroupName="conType" Margin="28,67,0,0" Width="98" HorizontalAlignment="Left" VerticalAlignment="Top"
                      IsChecked="{Binding Source={x:Static p:Settings.Default}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=isUdp, Converter={StaticResource RadioConverter}, ConverterParameter=False }" Height="23" VerticalContentAlignment="Center" Grid.ColumnSpan="2"  
                                  />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                          Text="{Binding Source={x:Static p:Settings.Default }, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=baudRate}" Margin="61.5,110,0,0" VerticalContentAlignment="Center" Grid.Column="1"
-                         />
-                <Button Content="Disconnect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="244.5,67,0,0" Grid.Column="1"/>
-                <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="61.5,67,0,0" Grid.Column="1"/>
-                <Button Content="Connect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="154.5,67,0,0" Grid.Column="1"/>
-                <Label Content="CSV SAVE" HorizontalAlignment="Left" Margin="28,170,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
-                <Separator HorizontalAlignment="Left" Height="27" Margin="10,138,0,0" VerticalAlignment="Top" Width="816" Grid.ColumnSpan="2"/>
-                <Label Content="Location:" HorizontalAlignment="Left" Margin="91,170,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
-                <Label Content="File name:" HorizontalAlignment="Left" Margin="91,201,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="508"
+                         >
+                        <TextBox.IsEnabled>
+                            <Binding ElementName="isComRadio" Path="IsChecked" />
+                        </TextBox.IsEnabled>
+                    </TextBox>
+                    <Button x:Name="disconnectButton" Content="Disconnect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="244.5,67,0,0" Grid.Column="1">
+                        <Button.IsEnabled>
+                            <Binding ElementName="isComRadio" Path="IsChecked" />
+                        </Button.IsEnabled>
+                    </Button>
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="61.5,67,0,0" Grid.Column="1">
+                        <ComboBox.IsEnabled>
+                            <Binding ElementName="isComRadio" Path="IsChecked" />
+                        </ComboBox.IsEnabled>
+                    </ComboBox>
+                    <Button x:Name="connectButton" Content="Connect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="154.5,67,0,0" Grid.Column="1">
+                        <Button.IsEnabled>
+                            <Binding ElementName="isComRadio" Path="IsChecked" />
+                        </Button.IsEnabled>
+                    </Button>
+                    <Label Content="CSV SAVE" HorizontalAlignment="Left" Margin="28,170,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <Separator HorizontalAlignment="Left" Height="27" Margin="10,138,0,0" VerticalAlignment="Top" Width="816" Grid.ColumnSpan="2"/>
+                    <Label Content="Location:" HorizontalAlignment="Left" Margin="91,170,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+                    <Label Content="File name:" HorizontalAlignment="Left" Margin="91,201,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="508"
                     Text="{Binding csvLocation, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="61,171,0,0" VerticalContentAlignment="Center" Grid.Column="1"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="508"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="508"
                     Text="{Binding csvFileName, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="61,202,0,0" VerticalContentAlignment="Center" Grid.Column="1"
                          />
-                <Button Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="574,171,0,0" Click="Button_Click" Grid.Column="1"/>
-                <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="574,202,0,0" Grid.Column="1"/>
-                <Label Content="Baud Rate:" HorizontalAlignment="Left" Margin="91,109,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Set Name">
-            <Grid Background="#FFE5E5E5">
-                <Label Content="Name 1-5" HorizontalAlignment="Left" Margin="28,28,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right"/>
-                <Label Content="Name 6-10" HorizontalAlignment="Left" Margin="28,59,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right"/>
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <Button Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="574,171,0,0" Click="Button_Click" Grid.Column="1"/>
+                    <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="574,202,0,0" Grid.Column="1" Click="Button_Click_1"/>
+                    <Label Content="Baud Rate:" HorizontalAlignment="Left" Margin="91,109,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+                    <Button x:Name="listenButton" Content="Listen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="23" Margin="155,28,0,0" Grid.Column="1" Click="listenButton_Click" >
+                        <Button.IsEnabled>
+                            <Binding ElementName="isUdpRadio" Path="IsChecked" />
+                        </Button.IsEnabled>
+                    </Button>
+                    <Button x:Name="stopListenButton" Content="Stop listen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="245,28,0,0" Grid.Column="1" Click="stopListenButton_Click">
+                        <Button.IsEnabled>
+                            <Binding ElementName="isUdpRadio" Path="IsChecked" />
+                        </Button.IsEnabled>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Set Name">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Name 1-5" HorizontalAlignment="Left" Margin="28,28,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <Label Content="Name 6-10" HorizontalAlignment="Left" Margin="28,59,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="119,29,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,29,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="305,29,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,29,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name5, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="491,29,0,0" VerticalContentAlignment="Center"
                          />
-                
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name6, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="119,60,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name7, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,60,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name8, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="305,60,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name9, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,60,0,0" VerticalContentAlignment="Center"
                          />
-                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name10, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="491,60,0,0" VerticalContentAlignment="Center"
                          />
-            </Grid>
-        </TabItem>
-        <TabItem Header="Log">
-            <Grid Background="#FFE5E5E5">
-                <TextBox Name="logTextBox" Text="{Binding log, Mode=TwoWay}" Margin="0" TextWrapping="Wrap"  IsReadOnly="True"/>
-            </Grid>
-        </TabItem>
-    </TabControl>
+                    <Label Content="Counter-Reset Password (Old)" HorizontalAlignment="Left" Margin="28,114,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+                    <Label Content="Counter-Reset Password (New)" HorizontalAlignment="Left" Margin="28,145,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
+                    <Label Content="Counter-Reset Password (New-Confirm)" HorizontalAlignment="Left" Margin="28,176,0,0" VerticalAlignment="Top" Height="26" Width="227"/>
+                    <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="oldPwdBox" HorizontalAlignment="Left" Margin="264,117,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
+                    <PasswordBox x:Name="pwdBox" HorizontalAlignment="Left" Margin="264,148,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
+                    <PasswordBox x:Name="pwdBoxConfirm" HorizontalAlignment="Left" Margin="264,179,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
+                    <Button Content="Save Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="264,212,0,0" Height="24" Click="Save_Password_Button_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Log">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox Name="logTextBox" Text="{Binding log, Mode=TwoWay}" Margin="0" TextWrapping="Wrap"  IsReadOnly="True"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label Content="Status:" VerticalAlignment="Center" FontWeight="Bold" />
+            <Label x:Name="statusLabel" VerticalAlignment="Center" Content="Disconnected" FontWeight="Bold"  />
+        </StackPanel>
+    </Grid>
+
 
 
 </Window>
