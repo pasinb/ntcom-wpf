@@ -31,10 +31,12 @@ namespace NTCOM_WPF
     public class ConnectionChangedEvent
     {
         public bool isSuccess;
+        public bool isOpen;
         public string desc;
-        public ConnectionChangedEvent(bool newIsSuccess, string newDesc)
+        public ConnectionChangedEvent(bool newIsSuccess, bool newIsOpen, string newDesc)
         {
             isSuccess = newIsSuccess;
+            isOpen = newIsOpen;
             desc = newDesc; 
         }
     }
@@ -130,11 +132,11 @@ namespace NTCOM_WPF
                         }
                     }
                 });
-                OnConnectionChanged(new ConnectionChangedEvent(true, "UDP listening"));
+                OnConnectionChanged(new ConnectionChangedEvent(true, true, "UDP listening"));
             }
             catch (SocketException e)
             {
-                OnConnectionChanged(new ConnectionChangedEvent(false, e.Message));
+                OnConnectionChanged(new ConnectionChangedEvent(false, true, e.Message));
             }
         }
 
@@ -143,12 +145,12 @@ namespace NTCOM_WPF
             try
             {
                 udp_client.Close();
-                OnConnectionChanged(new ConnectionChangedEvent(true, "Disconnected"));
+                OnConnectionChanged(new ConnectionChangedEvent(true, false, "Disconnected"));
 
             }
             catch (SocketException e)
             {
-                OnConnectionChanged(new ConnectionChangedEvent(false, e.Message));
+                OnConnectionChanged(new ConnectionChangedEvent(false, false, e.Message));
             }
         }
         public void comStart()
@@ -229,7 +231,7 @@ namespace NTCOM_WPF
                     serial_port.DiscardOutBuffer();
                     serial_port.Open();
                     autoconnecting = false;
-                    OnConnectionChanged( new ConnectionChangedEvent(true, "COM port opened"));
+                    OnConnectionChanged( new ConnectionChangedEvent(true, true, "COM port opened"));
                     return;
                 }
                 catch (Exception e)

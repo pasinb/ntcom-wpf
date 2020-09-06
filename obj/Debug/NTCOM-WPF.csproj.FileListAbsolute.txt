@@ -41,3 +41,8 @@ C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\bin\Debug\ToastNotifications.Mes
 C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Debug\App.baml
 C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Debug\PwdDialog.g.cs
 C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Debug\PwdDialog.baml
+C:\Users\Panbe\Documents\repo\ntcom-wpf\bin\Debug\ToastNotifications.dll
+C:\Users\Panbe\Documents\repo\ntcom-wpf\bin\Debug\ToastNotifications.Messages.dll
+C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\PwdDialog.g.cs
+C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\App.baml
+C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\PwdDialog.baml

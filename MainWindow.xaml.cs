@@ -12,6 +12,8 @@ using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using ToastNotifications.Messages;
 using System.Security.Cryptography;
+using System.Drawing.Printing;
+using System.Threading;
 
 namespace NTCOM_WPF
 {
@@ -138,6 +140,15 @@ namespace NTCOM_WPF
             if (e.isSuccess)
             {
                 statusLabel.Content = e.desc;
+                if (e.isOpen)
+                {
+                    notifier.ShowSuccess("UDP listening");
+                    statusLabel.Foreground = Brushes.Green;
+                }
+                else {
+                    notifier.ShowSuccess("UDP stopped listening");
+                    statusLabel.Foreground = Brushes.Red;
+                }
             }
             else
             {
@@ -244,24 +255,50 @@ namespace NTCOM_WPF
             var dialog = new PwdDialog();
             if (dialog.ShowDialog() == true)
             {
-                try
-                {
-                    connectionManager.send(":NT00RSET");
-                    notifier.ShowSuccess("Reset message sent");
-                }
-                catch (Exception ee) {
-                    MessageBox.Show(ee.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                new Thread(send_reset).Start();
+
+                
 
             }
 
         }
 
+        private void send_reset() {
+            try
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        connectionManager.send(":NT00RSET");
+                    }));
+                    if (i != 2) {
+                        Thread.Sleep(1000);
+                    }
+                }
+
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    notifier.ShowSuccess("Reset message sent");
+                }));
+            }
+            catch (Exception ee)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(ee.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }));
+            }
+        }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
             {
+                //printDialog.DefaultPageSettings.Margins = margins;
+
+                //Margins margins = new Margins(100, 100, 100, 100);
+                //printDialog.
                 printDialog.PrintVisual(mainGrid, "DataGrid");
             }
         }

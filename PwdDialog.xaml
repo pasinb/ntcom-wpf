@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="Enter Password" Height="137" Width="283"
         ResizeMode="NoResize"
+		FocusManager.FocusedElement="{Binding ElementName=pwdBox}"
         >
-    <Grid>
-        <Button Content="Submit" Name="SubmitButton" Margin="113,71,92,10" VerticalAlignment="Center" Width="70" Height="25" HorizontalAlignment="Center" Click="SubmitButton_Click"/>
-        <PasswordBox x:Name="pwdBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="256" Height="30"/>
-        <Button Content="Cancel" Margin="195,71,10,10" VerticalAlignment="Center" Width="70" Height="25" HorizontalAlignment="Center" Click="Button_Click"/>
-    </Grid>
+	<Grid>
+		<Button Content="Submit" Name="SubmitButton" Margin="10,65,197,10" VerticalAlignment="Center" Width="70" Height="33" HorizontalAlignment="Center" Click="SubmitButton_Click"/>
+		<PasswordBox x:Name="pwdBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="228" KeyDown="pwdBox_KeyDown"/>
+		<Button Content="Cancel" Margin="85,65,122,10" VerticalAlignment="Center" Width="70" Height="33" HorizontalAlignment="Center" Click="Button_Click"/>
+	</Grid>
 </Window>

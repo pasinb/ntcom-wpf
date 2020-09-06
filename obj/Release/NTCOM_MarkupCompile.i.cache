@@ -1,4 +1,4 @@
-﻿NTCOM-WPF
+﻿NTCOM
 
 
 winexe
@@ -10,11 +10,11 @@ none
 false
 TRACE
 C:\Users\Panbe\Documents\repo\ntcom-wpf\App.xaml
-11151548125
+21565396243
 
-8-1803622940
-141324910927
-MainWindow.xaml;
+101398116719
+17-847334899
+MainWindow.xaml;PwdDialog.xaml;
 
 True
 

@@ -1,19 +1,19 @@
-﻿NTCOM-WPF
+﻿NTCOM
 
 
 winexe
 C#
 .cs
-C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Debug\
+C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\
 NTCOM_WPF
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\Panbe\Documents\repo\ntcom-wpf\App.xaml
 21565396243
 
-101633336184
-18-2123275338
+9-1819271745
+17-847334899
 MainWindow.xaml;PwdDialog.xaml;
 
 False

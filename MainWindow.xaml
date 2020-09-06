@@ -28,10 +28,10 @@
                           ItemsSource="{Binding Source=stateGrid}">
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
-                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Background" Value="#b5b5ff" />
                                 <Setter Property="Foreground" Value="Black" />
                                 <Setter Property="BorderBrush" Value="Black"/>
-                                <Setter Property="BorderThickness" Value="1 1 1 1"/>
+                                <Setter Property="BorderThickness" Value="1 1 1 1" />
                                 <Setter Property="Margin" Value="-1,-1,0,0" />
                                 <Setter Property="Width" Value="auto"/>
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -41,77 +41,90 @@
                             <DataGridTextColumn Header="" Binding="{Binding index}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
+										<Setter Property="Margin" Value="-1,-1,0,0" />
+										<Setter Property="Background" Value="#b5b5ff" />
+										<Setter Property="TextAlignment" Value="Center" />
+										<Setter Property="HorizontalAlignment" Value="Stretch" />
+									</Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name1}" Binding="{Binding data[0]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[0], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[0], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name2}" Binding="{Binding data[1]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[1], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[1], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name3}" Binding="{Binding data[2]}">
                                 <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[2], Converter={StaticResource NameToBrushConverter}}"/>
+									<Style TargetType="{x:Type TextBlock}">
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[2], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name4}" Binding="{Binding data[3]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[3], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[3], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name5}" Binding="{Binding data[4]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[4], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[4], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name6}" Binding="{Binding data[5]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[5], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[5], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name7}" Binding="{Binding data[6]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[6], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[6], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name8}" Binding="{Binding data[7]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[7], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[7], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name9}" Binding="{Binding data[8]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[8], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[8], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name10}" Binding="{Binding data[9]}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Background" Value="{Binding isRed[9], Converter={StaticResource NameToBrushConverter}}"/>
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Background" Value="{Binding isRed[9], Converter={StaticResource NameToBrushConverter}}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
@@ -219,22 +232,16 @@
                     <Label Content="Counter-Reset Password (Old)" HorizontalAlignment="Left" Margin="28,114,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
                     <Label Content="Counter-Reset Password (New)" HorizontalAlignment="Left" Margin="28,145,0,0" VerticalAlignment="Top" Height="26" Width="186"/>
                     <Label Content="Counter-Reset Password (New-Confirm)" HorizontalAlignment="Left" Margin="28,176,0,0" VerticalAlignment="Top" Height="26" Width="227"/>
-                    <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <PasswordBox x:Name="oldPwdBox" HorizontalAlignment="Left" Margin="264,117,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
                     <PasswordBox x:Name="pwdBox" HorizontalAlignment="Left" Margin="264,148,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
                     <PasswordBox x:Name="pwdBoxConfirm" HorizontalAlignment="Left" Margin="264,179,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
                     <Button Content="Save Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="264,212,0,0" Height="24" Click="Save_Password_Button_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Log">
-                <Grid Background="#FFE5E5E5">
-                    <TextBox Name="logTextBox" Text="{Binding log, Mode=TwoWay}" Margin="0" TextWrapping="Wrap"  IsReadOnly="True"/>
-                </Grid>
-            </TabItem>
         </TabControl>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Label Content="Status:" VerticalAlignment="Center" FontWeight="Bold" />
-            <Label x:Name="statusLabel" VerticalAlignment="Center" Content="Disconnected" FontWeight="Bold"  />
+            <Label x:Name="statusLabel" VerticalAlignment="Center" Content="Disconnected" FontWeight="Bold" Foreground="Red"  />
         </StackPanel>
     </Grid>
 

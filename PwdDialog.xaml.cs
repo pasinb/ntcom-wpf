@@ -32,11 +32,16 @@ namespace NTCOM_WPF
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            onsubmit();
+        }
+
+        private void onsubmit() {
             if (!isPasswordCorrect(pwdBox.Password))
             {
-                MessageBox.Show("Incorrect password", "" ,MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Incorrect password", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else {
+            else
+            {
                 DialogResult = true;
             }
         }
@@ -62,6 +67,14 @@ namespace NTCOM_WPF
                 if (hashBytes[i + 16] != hash[i])
                     return false;
             return true;
+        }
+
+        private void pwdBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) { 
+            onsubmit();
+
+            }
         }
     }
 }

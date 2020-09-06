@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Release\
+C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\
 NTCOM_WPF
 none
 false
 TRACE
-C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\App.xaml
-11151548125
+C:\Users\Panbe\Documents\repo\ntcom-wpf\App.xaml
+21565396243
 
-91413765524
-14926995769
-MainWindow.xaml;
+101398116719
+17-847334899
+MainWindow.xaml;PwdDialog.xaml;
 
-True
+False
 
