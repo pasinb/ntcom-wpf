@@ -68,7 +68,7 @@ namespace NTCOM_WPF {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/NTCOM-WPF;component/pwddialog.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/NTCOM;component/pwddialog.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\PwdDialog.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

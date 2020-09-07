@@ -354,6 +354,15 @@ namespace NTCOM_WPF
                     return false;
             return true;
         }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                mainTab.SelectedIndex = 4;
+            }));
+
+        }
     }
 
     public class RadioConverter : IValueConverter
