@@ -17,15 +17,17 @@
             <RowDefinition />
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="mainTab" Margin="0">
+        <TextBlock Height="18" Name="dateText" TextWrapping="Wrap" Text="" Width="94" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,5,0" TextAlignment="Right"/>
+        <TabControl Grid.Row="0" x:Name="mainTab" Margin="0" SelectionChanged="mainTab_SelectionChanged">
+
             <TabItem Header ="Data">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
-                    <DataGrid ColumnWidth="*" Background="#FFFFFFFF"  Name="mainGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
-                          ItemsSource="{Binding Source=stateGrid}" Margin="0">
+                    <DataGrid Name="mainGrid" ColumnWidth="*" Background="#FFFFFFFF"   AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
+                          ItemsSource="{Binding Source=stateGrid}" Margin="0" HeadersVisibility="Column">
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
                                 <Setter Property="Background" Value="#b5b5ff" />
@@ -139,56 +141,28 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130*"/>
-                        <ColumnDefinition Width="137*"/>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="120*"/>
                         <ColumnDefinition Width="633*"/>
                     </Grid.ColumnDefinitions>
-
-                    <RadioButton x:Name="isUdpRadio" Height="23" GroupName="conType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="UDP Network" Margin="28,28,0,0"
-                         IsChecked="{Binding Source={x:Static p:Settings.Default}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=isUdp, Converter={StaticResource RadioConverter}, ConverterParameter=True }" VerticalContentAlignment="Center" Grid.ColumnSpan="2"    />
-                    <RadioButton x:Name="isComRadio" Content="COM Port" GroupName="conType" Margin="28,67,0,0" Width="98" HorizontalAlignment="Left" VerticalAlignment="Top"
-                     IsChecked="{Binding Source={x:Static p:Settings.Default}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=isUdp, Converter={StaticResource RadioConverter}, ConverterParameter=False }" Height="23" VerticalContentAlignment="Center"  
-                                 />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                         Text="{Binding Source={x:Static p:Settings.Default }, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Path=baudRate}" Margin="62,110,0,0" VerticalContentAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"
-                         >
-                        <TextBox.IsEnabled>
-                            <Binding ElementName="isComRadio" Path="IsChecked" />
-                        </TextBox.IsEnabled>
-                    </TextBox>
-                    <Button x:Name="disconnectButton" Content="Disconnect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="106.882,67,0,0" Grid.Column="2">
-                        <Button.IsEnabled>
-                            <Binding ElementName="isComRadio" Path="IsChecked" />
-                        </Button.IsEnabled>
-                    </Button>
-                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="62,67,0,0" Grid.Column="1" Grid.ColumnSpan="2">
-                        <ComboBox.IsEnabled>
-                            <Binding ElementName="isComRadio" Path="IsChecked" />
-                        </ComboBox.IsEnabled>
-                    </ComboBox>
-                    <Button x:Name="connectButton" Content="Connect" HorizontalAlignment="Left" VerticalAlignment="Top" Width="86" Height="23" Margin="16.882,67,0,0" Grid.Column="2">
-                        <Button.IsEnabled>
-                            <Binding ElementName="isComRadio" Path="IsChecked" />
-                        </Button.IsEnabled>
-                    </Button>
-                    <Label Content="CSV SAVE" HorizontalAlignment="Left" Margin="28,170,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
-                    <Separator HorizontalAlignment="Left" Height="27" Margin="10,138,0,0" VerticalAlignment="Top" Width="816" Grid.ColumnSpan="3"/>
-                    <Label Content="Location:" HorizontalAlignment="Left" Margin="91,170,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
-                    <Label Content="File name:" HorizontalAlignment="Left" Margin="91,201,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+                    <Label Content="CSV SAVE" HorizontalAlignment="Left" Margin="28,100,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <Separator HorizontalAlignment="Left" Height="27" Margin="10,68,0,0" VerticalAlignment="Top" Width="816" Grid.ColumnSpan="4"/>
+                    <Label Content="Location:" HorizontalAlignment="Left" Margin="91,100,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="3"/>
+                    <Label Content="File name:" HorizontalAlignment="Left" Margin="91,131,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="3"/>
                     <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="508"
-                    Text="{Binding csvLocation, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="61,171,0,0" VerticalContentAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"
+                    Text="{Binding csvLocation, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="43.5,101,0,0" VerticalContentAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2"
                          />
                     <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="508"
-                    Text="{Binding csvFileName, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="61,202,0,0" VerticalContentAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"
+                    Text="{Binding csvFileName, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="43.5,132,0,0" VerticalContentAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2"
                          />
-                    <Button Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="436.882,171,0,0" Click="Button_Click" Grid.Column="2"/>
-                    <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="436.882,202,0,0" Grid.Column="2" Click="Button_Click_1"/>
-                    <Label Content="Baud Rate:" HorizontalAlignment="Left" Margin="91,109,0,0" VerticalAlignment="Top" Height="26" Width="86" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
-                    <Button x:Name="listenButton" Content="Listen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="23" Margin="17.882,28,0,0" Grid.Column="2" Click="listenButton_Click" >
+                    <Button Content="Select" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="437,101,0,0" Click="Button_Click" Grid.Column="3"/>
+                    <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Height="23" Margin="437,132,0,0" Grid.Column="3" Click="Button_Click_1"/>
+                    <Button x:Name="listenButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="23" Margin="27,20,0,0" Click="listenButton_Click" >
                         <Button.IsEnabled>
                             <Binding ElementName="isUdpRadio" Path="IsChecked" />
                         </Button.IsEnabled>
                     </Button>
-                    <Button x:Name="stopListenButton" Content="Stop listen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="107.882,28,0,0" Grid.Column="2" Click="stopListenButton_Click">
+                    <Button x:Name="stopListenButton" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="23" Margin="116,20,0,0" Click="stopListenButton_Click" Grid.ColumnSpan="3">
                         <Button.IsEnabled>
                             <Binding ElementName="isUdpRadio" Path="IsChecked" />
                         </Button.IsEnabled>
@@ -208,51 +182,53 @@
                         <ColumnDefinition Width="17*"/>
                         <ColumnDefinition Width="83*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Counter-Reset Password (Old)" HorizontalAlignment="Left" Margin="27,65,0,0" VerticalAlignment="Top" Height="26" Width="186" Grid.ColumnSpan="2"/>
-                    <Label Content="Counter-Reset Password (New)" HorizontalAlignment="Left" Margin="27,96,0,0" VerticalAlignment="Top" Height="26" Width="186" Grid.ColumnSpan="2"/>
-                    <Label Content="Counter-Reset Password (New-Confirm)" HorizontalAlignment="Left" Margin="27,127,0,0" VerticalAlignment="Top" Height="26" Width="227" Grid.ColumnSpan="2"/>
-                    <PasswordBox x:Name="oldPwdBox" HorizontalAlignment="Left" Margin="110,68,0,0" VerticalAlignment="Top" Width="110" Height="23" Grid.Column="1"/>
-                    <PasswordBox x:Name="pwdBox" HorizontalAlignment="Left" Margin="110,99,0,0" VerticalAlignment="Top" Width="110" Height="23" Grid.Column="1"/>
-                    <PasswordBox x:Name="pwdBoxConfirm" HorizontalAlignment="Left" Margin="110,130,0,0" VerticalAlignment="Top" Width="110" Height="23" Grid.Column="1"/>
-                    <Button Content="Save Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="110,163,0,0" Height="24" Click="Save_Password_Button_Click" Grid.Column="1"/>
+                    <Label Content="Counter-Reset Password (Old)" HorizontalAlignment="Left" Margin="27,74,0,0" VerticalAlignment="Top" Height="26" Width="186" Grid.ColumnSpan="2"/>
+                    <Label Content="Counter-Reset Password (New)" HorizontalAlignment="Left" Margin="27,106,0,0" VerticalAlignment="Top" Height="26" Width="186" Grid.ColumnSpan="2"/>
+                    <Label Content="Counter-Reset Password (New-Confirm)" HorizontalAlignment="Left" Margin="27,136,0,0" VerticalAlignment="Top" Height="26" Width="227" Grid.ColumnSpan="2"/>
+                    <PasswordBox x:Name="oldPwdBox" HorizontalAlignment="Left" Margin="110,78,0,0" VerticalAlignment="Top" Width="110" Height="22" Grid.Column="1"/>
+                    <PasswordBox x:Name="pwdBox" HorizontalAlignment="Left" Margin="110,108,0,0" VerticalAlignment="Top" Width="110" Height="24" Grid.Column="1"/>
+                    <PasswordBox x:Name="pwdBoxConfirm" HorizontalAlignment="Left" Margin="110,140,0,0" VerticalAlignment="Top" Width="110" Height="22" Grid.Column="1"/>
+                    <Button Content="Save Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="110,172,0,0" Height="24" Click="Save_Password_Button_Click" Grid.Column="1"/>
                     <Button Content="Counter Reset" Margin="27,20,0,0" HorizontalContentAlignment="Center" Click="Button_Click_3" Width="125" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
 
             </TabItem>
             <TabItem x:Name="setNameTab" Header="Set Name" Visibility="Hidden">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Name 1-5" HorizontalAlignment="Left" Margin="28,28,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
-                    <Label Content="Name 6-10" HorizontalAlignment="Left" Margin="28,59,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="119,29,0,0" VerticalContentAlignment="Center"
+                    <Button Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Margin="27,20,0,0" Height="24" Click="Button_Click_6"/>
+
+                    <Label Content="Name 1-5" HorizontalAlignment="Left" Margin="28,58,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <Label Content="Name 6-10" HorizontalAlignment="Left" Margin="28,88,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="120,58,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,29,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,58,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="305,29,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="306,58,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,29,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,58,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name5, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="491,29,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name5, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="492,58,0,0" VerticalContentAlignment="Center"
                          />
 
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name6, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="119,60,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name6, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="120,90,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name7, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,60,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name7, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,90,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name8, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="305,60,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name8, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="306,90,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name9, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,60,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name9, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,90,0,0" VerticalContentAlignment="Center"
                          />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
-                    Text="{Binding name10, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="491,60,0,0" VerticalContentAlignment="Center"
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name10, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="492,90,0,0" VerticalContentAlignment="Center"
                          />
 
                 </Grid>

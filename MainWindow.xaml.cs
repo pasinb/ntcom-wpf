@@ -14,6 +14,8 @@ using ToastNotifications.Messages;
 using System.Security.Cryptography;
 using System.Drawing.Printing;
 using System.Threading;
+using System.Windows.Threading;
+using System.Text;
 
 namespace NTCOM_WPF
 {
@@ -47,6 +49,11 @@ namespace NTCOM_WPF
         public MainWindow()
         {
             InitializeComponent();
+
+            DispatcherTimer timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+            {
+                this.dateText.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            }, this.Dispatcher);
 
             connectionManager = new ConnectionManager();
             connectionManager.OnRecvMsg += new RecvMsgEventHandler(HandleOnRecv);
@@ -183,9 +190,10 @@ namespace NTCOM_WPF
             //add data to CSV file
             try
             {
-                using (StreamWriter sw = File.AppendText(full_path))
+               
+                //using (StreamWriter sw = File.AppendText(full_path))
+                using (StreamWriter sw = new StreamWriter(File.OpenWrite(full_path), new UTF8Encoding(false)))
                 {
-
                     sw.WriteLine(String.Format(",{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
                         Properties.Settings.Default.name1,
                         Properties.Settings.Default.name2,
@@ -361,7 +369,23 @@ namespace NTCOM_WPF
             {
                 mainTab.SelectedIndex = 4;
             }));
+        }
 
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                mainTab.SelectedIndex = 0;
+            }));
+        }
+
+        private void mainTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+                
+            if (mainTab.SelectedIndex ==1)
+            {
+                Properties.Settings.Default.csvFileName = DateTime.Now.ToString("yyyyMMdd") + ".csv"; 
+            }
         }
     }
 
