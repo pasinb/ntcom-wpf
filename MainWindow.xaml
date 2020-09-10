@@ -11,6 +11,7 @@
         <local:RadioConverter x:Key="RadioConverter" />
         <local:MainWindow x:Key="MainWindow" />
         <local:NameToBrushConverter x:Key="NameToBrushConverter"/>
+        <local:IdleConverter x:Key="IdleConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,119 +22,168 @@
         <TabControl Grid.Row="0" x:Name="mainTab" Margin="0" SelectionChanged="mainTab_SelectionChanged">
 
             <TabItem Header ="Data">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFFFFFFF">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
-                    <DataGrid Name="mainGrid" ColumnWidth="*" Background="#FFFFFFFF"   AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
-                          ItemsSource="{Binding Source=stateGrid}" Margin="0" HeadersVisibility="Column">
-                        <DataGrid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
-                                <Setter Property="Background" Value="#b5b5ff" />
-                                <Setter Property="Foreground" Value="Black" />
-                                <Setter Property="BorderBrush" Value="Black"/>
-                                <Setter Property="BorderThickness" Value="1 1 1 1" />
-                                <Setter Property="Margin" Value="-1,-1,0,0" />
-                                <Setter Property="Width" Value="auto"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            </Style>
-                        </DataGrid.Resources>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="" Binding="{Binding index}" Width="*">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Margin" Value="-1,-1,0,0" />
-                                        <Setter Property="Background" Value="#b5b5ff" />
-                                        <Setter Property="TextAlignment" Value="Center" />
-                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name1}" Binding="{Binding data[0]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[0], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name2}" Binding="{Binding data[1]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[1], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name3}" Binding="{Binding data[2]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[2], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name4}" Binding="{Binding data[3]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[3], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name5}" Binding="{Binding data[4]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[4], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name6}" Binding="{Binding data[5]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[5], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name7}" Binding="{Binding data[6]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[6], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name8}" Binding="{Binding data[7]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[7], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name9}" Binding="{Binding data[8]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[8], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name10}" Binding="{Binding data[9]}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="HorizontalAlignment" Value="Right" />
-                                        <Setter Property="Background" Value="{Binding isRed[9], Converter={StaticResource NameToBrushConverter}}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button Content="Set&#xA;Name" Grid.Column="1" VerticalAlignment="Top" Margin="5,10,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_5"/>
-                    <Button Content="Test&#xA;Reset" Grid.Column="1" VerticalAlignment="Top" Margin="5,51,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_2"/>
+                    <Grid Name="gridWrapper">
+                        <DataGrid Name="mainGrid" ColumnWidth="*" Background="#FFFFFFFF"   AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
+                          ItemsSource="{Binding Source=stateGrid}" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                  BorderThickness="0">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
+                                    <Setter Property="Background" Value="#b5b5ff" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="BorderBrush" Value="Black"/>
+                                    <Setter Property="BorderThickness" Value="1 1 1 1" />
+                                    <Setter Property="Margin" Value="-1,-1,0,0" />
+                                    <Setter Property="Width" Value="auto"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="" Binding="{Binding index}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
+                                            <Setter Property="Background" Value="#b5b5ff" />
+                                            <Setter Property="TextAlignment" Value="Center" />
+                                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name1}" Binding="{Binding data[0]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[0], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name2}" Binding="{Binding data[1]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[1], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name3}" Binding="{Binding data[2]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[2], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name4}" Binding="{Binding data[3]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[3], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name5}" Binding="{Binding data[4]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[4], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name6}" Binding="{Binding data[5]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[5], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name7}" Binding="{Binding data[6]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[6], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name8}" Binding="{Binding data[7]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[7], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name9}" Binding="{Binding data[8]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[8], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name10}" Binding="{Binding data[9]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding cellStatus[9], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                    <Button Content="Set&#xA;Name" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_5"/>
+                    <Button Content="Test&#xA;Reset" Grid.Column="1" VerticalAlignment="Top" Margin="5,46,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_2"/>
 
                 </Grid>
             </TabItem>

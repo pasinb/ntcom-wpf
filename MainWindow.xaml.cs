@@ -12,10 +12,10 @@ using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using ToastNotifications.Messages;
 using System.Security.Cryptography;
-using System.Drawing.Printing;
 using System.Threading;
 using System.Windows.Threading;
 using System.Text;
+using System.Windows.Documents;
 
 namespace NTCOM_WPF
 {
@@ -53,6 +53,18 @@ namespace NTCOM_WPF
             DispatcherTimer timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
                 this.dateText.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                for (int r = 0; r < 8; r++)
+                {
+                    for (int c = 0; c < 10; c++)
+                    {
+                        stateGrid[r].idleCount[c]++;
+                        if (stateGrid[r].idleCount[c] > 10)
+                        {
+                            stateGrid[r].cellStatus[c] = 2;
+                        }
+                        //Console.WriteLine(stateGrid[r].idleCount[c]);
+                    }
+                };
             }, this.Dispatcher);
 
             connectionManager = new ConnectionManager();
@@ -66,20 +78,24 @@ namespace NTCOM_WPF
                 {
                     index = Convert.ToString(i + 1),
                     data = new ObservableCollection<string> { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" },
-                    isRed = new ObservableCollection<bool> { false, false, false, false, false, false, false, false, false, false }
+                    cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
                 });
             }
             stateGrid.Add(new DataRow()
             {
                 index = "Sum: ",
                 data = new ObservableCollection<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
-                isRed = new ObservableCollection<bool> { false, false, false, false, false, false, false, false, false, false }
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+
             });
             stateGrid.Add(new DataRow()
             {
                 index = "Total: ",
                 data = new ObservableCollection<string> { "0", "", "", "", "", "", "", "", "", "" },
-                isRed = new ObservableCollection<bool> { false, false, false, false, false, false, false, false, false, false }
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
             });
             mainGrid.ItemsSource = stateGrid;
         }
@@ -104,18 +120,34 @@ namespace NTCOM_WPF
                     bool validInt = int.TryParse(addrStr, out int addr);
                     if (validInt && addr > 0 && addr <= 80)
                     {
+                        int rowIdx = (addr - 1) % 8;
+                        int colIdx = (int)Math.Floor((double)((addr - 1) / 8));
                         if (countStr == "TEST")
                         {
-                            stateGrid[(addr - 1) % 8].isRed[(int)Math.Floor((double)((addr - 1) / 8))] = true;
+                            stateGrid[rowIdx].cellStatus[colIdx] = 1;
+                            stateGrid[rowIdx].idleCount[colIdx] = 0;
+                            if (
+                                  stateGrid[rowIdx].cellStatus[colIdx] == 2
+                                  )
+                            {
+                                stateGrid[rowIdx].cellStatus[colIdx] = 0;
+                            }
                         }
                         else
                         {
                             bool validInt2 = int.TryParse(countStr, out int countInt);
                             if (validInt2)
                             {
-                                stateGrid[(addr - 1) % 8].data[(int)Math.Floor((double)((addr - 1) / 8))] = countInt.ToString();
+                                stateGrid[rowIdx].data[colIdx] = countInt.ToString();
+                                stateGrid[rowIdx].idleCount[colIdx] = 0;
+                                if (
+                                    stateGrid[rowIdx].cellStatus[colIdx] == 2
+                                    )
+                                {
+                                    stateGrid[rowIdx].cellStatus[colIdx] = 0;
+                                }
 
-                                // compute sum
+                                // calculate sum
                                 int[] sum = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
                                 for (int r = 0; r < 8; r++)
                                 {
@@ -128,7 +160,7 @@ namespace NTCOM_WPF
                                         }
                                     }
                                 };
-                                Console.WriteLine(sum);
+                                // Console.WriteLine(sum);
                                 int totalSum = sum.Sum();
                                 for (int c = 0; c < 10; c++)
                                 {
@@ -152,7 +184,8 @@ namespace NTCOM_WPF
                     notifier.ShowSuccess("UDP listening");
                     statusLabel.Foreground = Brushes.Green;
                 }
-                else {
+                else
+                {
                     notifier.ShowSuccess("UDP stopped listening");
                     statusLabel.Foreground = Brushes.Red;
                 }
@@ -175,7 +208,7 @@ namespace NTCOM_WPF
         {
             String save_dir = Properties.Settings.Default.csvLocation;
             String save_filename = Properties.Settings.Default.csvFileName;
-        
+
             String full_path;
             if (save_dir == "")
             {
@@ -190,7 +223,7 @@ namespace NTCOM_WPF
             //add data to CSV file
             try
             {
-               
+
                 //using (StreamWriter sw = File.AppendText(full_path))
                 using (StreamWriter sw = new StreamWriter(File.OpenWrite(full_path), new UTF8Encoding(false)))
                 {
@@ -221,7 +254,7 @@ namespace NTCOM_WPF
                 // Occurs when user set the Bridge count number, causing table rows to be modified
                 return;
             }
-   
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -253,7 +286,7 @@ namespace NTCOM_WPF
             {
                 for (int c = 0; c < 10; c++)
                 {
-                    stateGrid[r].isRed[c] = false;
+                    stateGrid[r].cellStatus[c] = 0;
                 }
             };
         }
@@ -264,31 +297,61 @@ namespace NTCOM_WPF
             if (dialog.ShowDialog() == true)
             {
                 new Thread(send_reset).Start();
-
-                
-
             }
 
         }
 
-        private void send_reset() {
+        private void send_reset()
+        {
+            int attempt = 0;
+            bool success = true;
             try
             {
-                for (int i = 0; i < 3; i++)
+                while (true)
                 {
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    attempt++;
+                    if (attempt > 1)
                     {
-                        connectionManager.send(":NT00RSET");
-                    }));
-                    if (i != 2) {
+                        try
+                        {
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            {
+                                notifier.ShowSuccess("Sending reset (attempt " + attempt + ")");
+                            }));
+                        }
+                        catch { }
+
+                    }
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            connectionManager.send(":NT00RSET");
+                        }));
                         Thread.Sleep(1000);
                     }
-                }
 
+                    success = true;
+                    for (int r = 0; r < 8; r++)
+                    {
+                        for (int c = 0; c < 10; c++)
+                        {
+                            if (stateGrid[r].data[c] != "0" && stateGrid[r].data[c] != "-")
+                            {
+                                success = false;
+                            }
+                        }
+                    };
+                    if (success)
+                    {
+                        break;
+                    }
+                }
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    notifier.ShowSuccess("Reset message sent");
+                    notifier.ShowSuccess("Reset successful");
                 }));
+
             }
             catch (Exception ee)
             {
@@ -303,21 +366,99 @@ namespace NTCOM_WPF
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
             {
-                //printDialog.DefaultPageSettings.Margins = margins;
+                //Size pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+                // sizing of the element.
 
-                //Margins margins = new Margins(100, 100, 100, 100);
-                //printDialog.
-                printDialog.PrintVisual(mainGrid, "DataGrid");
+                FlowDocument fd = new FlowDocument();
+                //fd.PagePadding = new Thickness(standardThickness);
+                fd.ColumnGap = 0;
+                fd.ColumnWidth = printDialog.PrintableAreaWidth;
+
+                Paragraph p = new Paragraph(new Run(DateTime.Now.ToString("dd/MM/yyyy")));
+                p.FontSize = 18;
+                p.TextAlignment = TextAlignment.Right;
+                fd.Blocks.Add(p);
+
+                //Table table = new Table();
+                //TableRowGroup tableRowGroup = new TableRowGroup();
+                //TableRow r = new TableRow();
+                //fd.PageWidth = printDialog.PrintableAreaWidth;
+                //fd.PageHeight = printDialog.PrintableAreaHeight;
+                //fd.BringIntoView();
+
+                Table table = new Table();
+                table.CellSpacing = 5;
+
+                //Thickness myThickness = new Thickness();
+                //myThickness.Bottom = 1;
+                //myThickness.Left = 1;
+                //myThickness.Right = 1;
+                //myThickness.Top = 1;
+                //table.BorderThickness = myThickness;
+                //table.BorderBrush = Brushes.Gray;
+
+                table.Background = Brushes.White;
+                table.FontSize = 12;
+
+                int numberOfColumns = 11;
+                for (int x = 0; x < numberOfColumns; x++)
+                {
+                    TableColumn tc = new TableColumn();
+                    tc.Width = (GridLength)new GridLengthConverter().ConvertFromString("60");
+                    table.Columns.Add(tc);
+
+                }
+
+                table.RowGroups.Add(new TableRowGroup());
+
+                table.RowGroups[0].Rows.Add(new TableRow());
+                TableRow currentRow = table.RowGroups[0].Rows[0];
+                currentRow = table.RowGroups[0].Rows[0];
+                currentRow.FontWeight = FontWeights.Bold;
+
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(""))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name1))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name2))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name3))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name4))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name5))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name6))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name7))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name8))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name9))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name10))));
+
+                for (int r = 0; r < 10; r++)
+                {
+                    table.RowGroups[0].Rows.Add(new TableRow());
+                    currentRow = table.RowGroups[0].Rows[r + 1];
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].index))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[0]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[1]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[2]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[3]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[4]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[5]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[6]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[7]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[8]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[9]))));
+                };
+
+                fd.Blocks.Add(table);
+                printDialog.PrintDocument(((IDocumentPaginatorSource)fd).DocumentPaginator, "");
             }
         }
 
         private void Save_Password_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!isPasswordCorrect(oldPwdBox.Password)) {
+            if (!isPasswordCorrect(oldPwdBox.Password))
+            {
                 MessageBox.Show("Old password incorrect", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (pwdBox.Password != pwdBoxConfirm.Password) {
+            if (pwdBox.Password != pwdBoxConfirm.Password)
+            {
                 MessageBox.Show("Password and confirm password does not match", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -381,10 +522,10 @@ namespace NTCOM_WPF
 
         private void mainTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                
-            if (mainTab.SelectedIndex ==1)
+
+            if (mainTab.SelectedIndex == 1)
             {
-                Properties.Settings.Default.csvFileName = DateTime.Now.ToString("yyyyMMdd") + ".csv"; 
+                Properties.Settings.Default.csvFileName = DateTime.Now.ToString("yyyyMMdd") + ".csv";
             }
         }
     }
@@ -409,9 +550,30 @@ namespace NTCOM_WPF
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (System.Convert.ToBoolean(value))
+            if (System.Convert.ToInt32(value) == 1)
             {
                 return (SolidColorBrush)(new BrushConverter().ConvertFrom("#ff9999"));
+            }
+            else if (System.Convert.ToInt32(value) == 2)
+            {
+                return (SolidColorBrush)(new BrushConverter().ConvertFrom("#9999ff"));
+            }
+            return DependencyProperty.UnsetValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
+    public class IdleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (System.Convert.ToInt32(value) > 10)
+            {
+                return (SolidColorBrush)(new BrushConverter().ConvertFrom("#0000ff"));
             }
             return DependencyProperty.UnsetValue;
         }
@@ -426,7 +588,9 @@ namespace NTCOM_WPF
     {
         public string index { get; set; }
         public ObservableCollection<string> data { get; set; }
-        public ObservableCollection<bool> isRed { get; set; }
+        // 1 = red, 2 = blue
+        public ObservableCollection<int> cellStatus { get; set; }
+        public ObservableCollection<int> idleCount { get; set; }
 
     }
 }
