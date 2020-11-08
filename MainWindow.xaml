@@ -6,11 +6,12 @@
         xmlns:local="clr-namespace:NTCOM_WPF"
         xmlns:p="clr-namespace:NTCOM_WPF.Properties"
         mc:Ignorable="d"
-        Title="NTCOM" Height="400" Width="914">
+        Title="NTCOM" Height="400" Width="1100">
     <Window.Resources>
         <local:RadioConverter x:Key="RadioConverter" />
         <local:MainWindow x:Key="MainWindow" />
         <local:NameToBrushConverter x:Key="NameToBrushConverter"/>
+        <local:NameToBorderConverter x:Key="NameToBorderConverter"/>
         <local:IdleConverter x:Key="IdleConverter"/>
     </Window.Resources>
     <Grid>
@@ -20,7 +21,6 @@
         </Grid.RowDefinitions>
         <TextBlock Height="18" Name="dateText" TextWrapping="Wrap" Text="" Width="94" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,5,0" TextAlignment="Right"/>
         <TabControl Grid.Row="0" x:Name="mainTab" Margin="0" SelectionChanged="mainTab_SelectionChanged">
-
             <TabItem Header ="Data">
                 <Grid Background="#FFFFFFFF">
                     <Grid.ColumnDefinitions>
@@ -29,7 +29,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Name="gridWrapper">
                         <DataGrid Name="mainGrid" ColumnWidth="*" Background="#FFFFFFFF"   AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserSortColumns="False"
-                          ItemsSource="{Binding Source=stateGrid}" HeadersVisibility="Column" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                          ItemsSource="{Binding Source=stateGrid}" HeadersVisibility="Column" GridLinesVisibility="None" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                   BorderThickness="0">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
@@ -43,15 +43,21 @@
                                     <Setter Property="BorderBrush" Value="Black"/>
                                     <Setter Property="BorderThickness" Value="1 1 1 1" />
                                     <Setter Property="Margin" Value="-1,-1,0,0" />
-                                    <Setter Property="Width" Value="auto"/>
                                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="" Binding="{Binding index}" Width="*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="Width" Value="auto"/>
+                                            <Setter Property="BorderThickness" Value="1" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
-                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="#b5b5ff" />
                                             <Setter Property="TextAlignment" Value="Center" />
                                             <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -61,6 +67,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name1}" Binding="{Binding data[0]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[0], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[0], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -73,6 +82,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name2}" Binding="{Binding data[1]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[1], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[1], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -85,6 +97,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name3}" Binding="{Binding data[2]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[2], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[2], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -97,6 +112,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name4}" Binding="{Binding data[3]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[3], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[3], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -109,6 +127,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name5}" Binding="{Binding data[4]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[4], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[4], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -121,6 +142,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name6}" Binding="{Binding data[5]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[5], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[5], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -133,6 +157,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name7}" Binding="{Binding data[6]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[6], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[6], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -145,6 +172,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name8}" Binding="{Binding data[7]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[7], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[7], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -157,6 +187,9 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name9}" Binding="{Binding data[8]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[8], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[8], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
@@ -169,7 +202,27 @@
                                 <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name10}" Binding="{Binding data[9]}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[9], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
                                             <Setter Property="Background" Value="{Binding cellStatus[9], Converter={StaticResource NameToBrushConverter}}" />
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="{Binding Source={x:Static p:Settings.Default}, Mode=TwoWay, Path=name11}"  Binding="{Binding data[10]}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Setter Property="BorderThickness" Value="{Binding data[10], Converter={StaticResource NameToBorderConverter}}" />
+                                            <Setter Property="Margin" Value="-1,-1,0,0" />
+                                            <Setter Property="Background" Value="{Binding cellStatus[10], Converter={StaticResource NameToBrushConverter}}" />
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
                                     <DataGridTextColumn.ElementStyle>
@@ -183,7 +236,8 @@
                     </Grid>
 
                     <Button Content="Set&#xA;Name" Grid.Column="1" VerticalAlignment="Top" Margin="5,5,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_5"/>
-                    <Button Content="Test&#xA;Reset" Grid.Column="1" VerticalAlignment="Top" Margin="5,46,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_2"/>
+                    <Button Content="Test&#xA;Reset" Grid.Column="1" VerticalAlignment="Top" Margin="5,87,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_2"/>
+                    <Button Content="Set&#xA;Hen" Grid.Column="1" VerticalAlignment="Top" Margin="5,46,2,0" HorizontalContentAlignment="Center" Padding="1" Click="Button_Click_7"/>
 
                 </Grid>
             </TabItem>
@@ -264,7 +318,6 @@
                     <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name5, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="492,58,0,0" VerticalContentAlignment="Center"
                          />
-
                     <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name6, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="120,90,0,0" VerticalContentAlignment="Center"
                          />
@@ -280,7 +333,52 @@
                     <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
                     Text="{Binding name10, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="492,90,0,0" VerticalContentAlignment="Center"
                          />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding name11, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="120,119,0,0" VerticalContentAlignment="Center"
+                         />
+                    <Label Content="Name 11" HorizontalAlignment="Left" Margin="27,117,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="setHensTab" Header="Set Hen" Visibility="Hidden">
+                <Grid Background="#FFE5E5E5">
+                    <Button Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Margin="27,20,0,0" Height="24" Click="Hen_back_click"/>
 
+                    <Label Content="Hen 1-5" HorizontalAlignment="Left" Margin="28,58,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <Label Content="Hen 6-10" HorizontalAlignment="Left" Margin="28,88,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="120,58,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,58,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="306,58,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,58,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen5, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="492,58,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen6, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="120,90,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen7, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="212,90,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen8, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="306,90,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen9, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="398,90,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                    Text="{Binding hen10, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Source={x:Static p:Settings.Default}}" Margin="492,90,0,0" VerticalContentAlignment="Center"
+                         />
+                    <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="88"
+                        Text="{Binding hen11, Mode=TwoWay, Source={x:Static p:Settings.Default}, UpdateSourceTrigger=PropertyChanged}" Margin="120,119,0,0" VerticalContentAlignment="Center"
+                         />
+                    <Label Content="Hen 11" HorizontalAlignment="Left" Margin="28,117,0,0" VerticalAlignment="Top" Height="26" Width="86"/>
                 </Grid>
             </TabItem>
         </TabControl>

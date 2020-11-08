@@ -7,4 +7,4 @@ PORT=1470
 # Local port - PC outgoing UDP port
 LOCALPORT=1471
 # Sent data
-DATA=:NT010888
+DATA=:NT800332

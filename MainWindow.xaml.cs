@@ -55,7 +55,7 @@ namespace NTCOM_WPF
                 this.dateText.Text = DateTime.Now.ToString("dd/MM/yyyy");
                 for (int r = 0; r < 8; r++)
                 {
-                    for (int c = 0; c < 10; c++)
+                    for (int c = 0; c < 11; c++)
                     {
                         stateGrid[r].idleCount[c]++;
                         if (stateGrid[r].idleCount[c] > 25)
@@ -77,26 +77,67 @@ namespace NTCOM_WPF
                 stateGrid.Add(new DataRow()
                 {
                     index = Convert.ToString(i + 1),
-                    data = new ObservableCollection<string> { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" },
-                    cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                    idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                    data = new ObservableCollection<string> { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"},
+                    cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                    idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
                 });
             }
-            stateGrid.Add(new DataRow()
+            stateGrid.Add(new DataRow() // 8
             {
-                index = "Sum: ",
-                data = new ObservableCollection<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
-                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                index = "Total House: ",
+                data = new ObservableCollection<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 
             });
+            stateGrid.Add(new DataRow() // 9
+            {
+                index = "Hens: ",
+                data = new ObservableCollection<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            });
+
+            stateGrid.Add(new DataRow() // 10
+            {
+                index = "%",
+                data = new ObservableCollection<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            });
+
             stateGrid.Add(new DataRow()
             {
-                index = "Total: ",
-                data = new ObservableCollection<string> { "0", "", "", "", "", "", "", "", "", "" },
-                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                index = "",
+                data = new ObservableCollection<string> { "", "", "", "", "", "", "", "", "", "", "" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+
             });
+
+            stateGrid.Add(new DataRow() // 12
+            {
+                index = "Total Farm: ",
+                data = new ObservableCollection<string> { "0", "", "", "", "", "", "", "", "", "", "" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            });
+
+            stateGrid.Add(new DataRow() // 13
+            {
+                index = "Total Hens: ",
+                data = new ObservableCollection<string> { "0", "", "", "", "", "", "", "", "", "", "" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            });
+            stateGrid.Add(new DataRow() // 14
+            {
+                index = "% Average",
+                data = new ObservableCollection<string> { "0", "", "", "", "", "", "", "", "", "", "" },
+                cellStatus = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                idleCount = new ObservableCollection<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            });
+            updateHenFromProperty();
             mainGrid.ItemsSource = stateGrid;
         }
 
@@ -118,7 +159,7 @@ namespace NTCOM_WPF
                     string countStr = m.Substring(5, 4);
 
                     bool validInt = int.TryParse(addrStr, out int addr);
-                    if (validInt && addr > 0 && addr <= 80)
+                    if (validInt && addr > 0 && addr <= 88)
                     {
                         int rowIdx = (addr - 1) % 8;
                         int colIdx = (int)Math.Floor((double)((addr - 1) / 8));
@@ -147,26 +188,7 @@ namespace NTCOM_WPF
                                     stateGrid[rowIdx].cellStatus[colIdx] = 0;
                                 }
 
-                                // calculate sum
-                                int[] sum = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-                                for (int r = 0; r < 8; r++)
-                                {
-                                    for (int c = 0; c < 10; c++)
-                                    {
-                                        bool valid = int.TryParse(stateGrid[r].data[c], out int v);
-                                        if (valid)
-                                        {
-                                            sum[c] += Convert.ToInt32(v);
-                                        }
-                                    }
-                                };
-                                // Console.WriteLine(sum);
-                                int totalSum = sum.Sum();
-                                for (int c = 0; c < 10; c++)
-                                {
-                                    stateGrid[8].data[c] = sum[c].ToString();
-                                }
-                                stateGrid[9].data[0] = totalSum.ToString();
+                                updateSum();
                             }
                         }
                     }
@@ -225,9 +247,9 @@ namespace NTCOM_WPF
             {
 
                 //using (StreamWriter sw = File.AppendText(full_path))
-                using (StreamWriter sw = new StreamWriter(File.OpenWrite(full_path), new UTF8Encoding(false)))
+                using (StreamWriter sw = new StreamWriter(File.OpenWrite(full_path), Encoding.Default))
                 {
-                    sw.WriteLine(String.Format(",{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
+                    sw.WriteLine(String.Format(",{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
                         Properties.Settings.Default.name1,
                         Properties.Settings.Default.name2,
                         Properties.Settings.Default.name3,
@@ -237,9 +259,14 @@ namespace NTCOM_WPF
                         Properties.Settings.Default.name7,
                         Properties.Settings.Default.name8,
                         Properties.Settings.Default.name9,
-                        Properties.Settings.Default.name10));
-                    for (int r = 0; r < 10; r++)
+                        Properties.Settings.Default.name10,
+                        Properties.Settings.Default.name11));
+                    for (int r = 0; r < 15; r++)
                     {
+                        if (r == 11) {
+                            continue;
+                        }
+                               
                         sw.WriteLine(
                            stateGrid[r].index + "," + string.Join(",", stateGrid[r].data)
                             );
@@ -284,7 +311,7 @@ namespace NTCOM_WPF
         {
             for (int r = 0; r < 8; r++)
             {
-                for (int c = 0; c < 10; c++)
+                for (int c = 0; c < 11; c++)
                 {
                     stateGrid[r].cellStatus[c] = 0;
                 }
@@ -345,11 +372,7 @@ namespace NTCOM_WPF
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
             {
-                //Size pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
-                // sizing of the element.
-
                 FlowDocument fd = new FlowDocument();
-                //fd.PagePadding = new Thickness(standardThickness);
                 fd.ColumnGap = 0;
                 fd.ColumnWidth = printDialog.PrintableAreaWidth;
 
@@ -358,23 +381,8 @@ namespace NTCOM_WPF
                 p.TextAlignment = TextAlignment.Right;
                 fd.Blocks.Add(p);
 
-                //Table table = new Table();
-                //TableRowGroup tableRowGroup = new TableRowGroup();
-                //TableRow r = new TableRow();
-                //fd.PageWidth = printDialog.PrintableAreaWidth;
-                //fd.PageHeight = printDialog.PrintableAreaHeight;
-                //fd.BringIntoView();
-
                 Table table = new Table();
                 table.CellSpacing = 5;
-
-                //Thickness myThickness = new Thickness();
-                //myThickness.Bottom = 1;
-                //myThickness.Left = 1;
-                //myThickness.Right = 1;
-                //myThickness.Top = 1;
-                //table.BorderThickness = myThickness;
-                //table.BorderBrush = Brushes.Gray;
 
                 table.Background = Brushes.White;
                 table.FontSize = 12;
@@ -406,8 +414,9 @@ namespace NTCOM_WPF
                 currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name8))));
                 currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name9))));
                 currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name10))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(Properties.Settings.Default.name11))));
 
-                for (int r = 0; r < 10; r++)
+                for (int r = 0; r < 15; r++)
                 {
                     table.RowGroups[0].Rows.Add(new TableRow());
                     currentRow = table.RowGroups[0].Rows[r + 1];
@@ -422,6 +431,7 @@ namespace NTCOM_WPF
                     currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[7]))));
                     currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[8]))));
                     currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[9]))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(stateGrid[r].data[10]))));
                 };
 
                 fd.Blocks.Add(table);
@@ -501,10 +511,92 @@ namespace NTCOM_WPF
 
         private void mainTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             if (mainTab.SelectedIndex == 1)
             {
                 Properties.Settings.Default.csvFileName = DateTime.Now.ToString("yyyyMMdd") + ".csv";
+            }
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                mainTab.SelectedIndex = 5;
+            }));
+        }
+
+        private void Hen_back_click(object sender, RoutedEventArgs e)
+        {
+            updateHenFromProperty();
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                mainTab.SelectedIndex = 0;
+            }));
+        }
+        private void updateHenFromProperty() {
+
+            int sum = 0;
+            for (int c = 0; c < 11; c++)
+            {
+                string hen = Properties.Settings.Default["hen" + (c + 1).ToString()].ToString();
+                bool validInt = int.TryParse(hen, out int henInt);
+                if (validInt) {
+                    if (c != 10) {
+                        sum += henInt;
+                    }
+                    stateGrid[9].data[c] = Properties.Settings.Default["hen" + (c + 1).ToString()].ToString();
+                }
+            }
+            stateGrid[13].data[0] = sum.ToString();
+            updateSum();
+        }
+        private void updateSum() {
+            // calculate total houses
+            int[] sum = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            for (int r = 0; r < 8; r++)
+            {
+                for (int c = 0; c < 11; c++)
+                {
+                    bool valid = int.TryParse(stateGrid[r].data[c], out int v);
+                    if (valid)
+                    {
+                        sum[c] += Convert.ToInt32(v);
+                    }
+                }
+            };
+
+            int totalSum = sum.Take(10).Sum();
+
+            for (int c = 0; c < 11; c++)
+            {
+
+                stateGrid[8].data[c] = sum[c].ToString(); // total house
+                bool valid = int.TryParse(stateGrid[9].data[c], out int henInt);
+                if (valid)
+                {
+                    if (henInt != 0)
+                    {
+                        stateGrid[10].data[c] = Math.Round(Convert.ToDouble(sum[c]) / Convert.ToDouble(henInt) * 100.0, 2).ToString(); // %
+                    }
+                    else
+                    {
+                        stateGrid[10].data[c] = "-";
+                    }
+                }
+            }
+
+            stateGrid[12].data[0] = totalSum.ToString(); // total farm
+            bool valid2 = int.TryParse(stateGrid[13].data[0], out int totalHenInt);
+            if (valid2)
+            {
+                if (totalHenInt != 0)
+                {
+                    stateGrid[14].data[0] = Math.Round(Convert.ToDouble(totalSum) / Convert.ToDouble(totalHenInt) * 100.0, 2).ToString(); // average %
+                }
+                else
+                {
+                    stateGrid[14].data[0] = "-";
+                }
             }
         }
     }
@@ -538,6 +630,26 @@ namespace NTCOM_WPF
                 return (SolidColorBrush)(new BrushConverter().ConvertFrom("#9999ff"));
             }
             return DependencyProperty.UnsetValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
+    public class NameToBorderConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (System.Convert.ToString(value) == "")
+            {
+                return "0";
+            }
+            else
+            {
+                return "1";
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

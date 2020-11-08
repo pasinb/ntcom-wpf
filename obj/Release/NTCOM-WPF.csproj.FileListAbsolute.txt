@@ -40,3 +40,4 @@ C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\NTCOM_MarkupCompile.lref
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\NTCOM.g.resources
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\NTCOM.exe
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\NTCOM.pdb
+C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\NTCOM-WPF.csprojAssemblyReference.cache
