@@ -18,7 +18,6 @@ C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\bin\Release\Ookii.Dialogs.Wpf.dl
 C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\bin\Release\Ookii.Dialogs.Wpf.xml
 C:\Users\pan\Documents\repo\NTCOM-WPF\NTCOM-WPF\obj\Release\NTCOM-WPF.csproj.CopyComplete
 C:\Users\Panbe\Documents\repo\ntcom-wpf\bin\Release\Ookii.Dialogs.Wpf.xml
-C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\NTCOM-WPF.csprojAssemblyReference.cache
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\MainWindow.g.cs
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\PwdDialog.g.cs
 C:\Users\Panbe\Documents\repo\ntcom-wpf\obj\Release\App.g.cs

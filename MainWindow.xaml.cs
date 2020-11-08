@@ -58,7 +58,7 @@ namespace NTCOM_WPF
                     for (int c = 0; c < 10; c++)
                     {
                         stateGrid[r].idleCount[c]++;
-                        if (stateGrid[r].idleCount[c] > 10)
+                        if (stateGrid[r].idleCount[c] > 25)
                         {
                             stateGrid[r].cellStatus[c] = 2;
                         }
@@ -303,62 +303,41 @@ namespace NTCOM_WPF
 
         private void send_reset()
         {
-            int attempt = 0;
-            bool success = true;
             try
             {
-                while (true)
-                {
-                    attempt++;
-                    if (attempt > 1)
-                    {
-                        try
-                        {
-                            Application.Current.Dispatcher.Invoke(new Action(() =>
-                            {
-                                notifier.ShowSuccess("Sending reset (attempt " + attempt + ")");
-                            }));
-                        }
-                        catch { }
-
-                    }
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Application.Current.Dispatcher.Invoke(new Action(() =>
-                        {
-                            connectionManager.send(":NT00RSET");
-                        }));
-                        Thread.Sleep(1000);
-                    }
-
-                    success = true;
-                    for (int r = 0; r < 8; r++)
-                    {
-                        for (int c = 0; c < 10; c++)
-                        {
-                            if (stateGrid[r].data[c] != "0" && stateGrid[r].data[c] != "-")
-                            {
-                                success = false;
-                            }
-                        }
-                    };
-                    if (success)
-                    {
-                        break;
-                    }
-                }
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    notifier.ShowSuccess("Reset successful");
+                    notifier.ShowSuccess("Start sending reset");
                 }));
 
+                for (int i = 0; i < 15; i++)
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        connectionManager.send(":NT00RSET");
+                    }));
+                    if (i != 14)
+                    {
+                        Thread.Sleep(1000);
+                    }
+                }
+
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    notifier.ShowSuccess("Finished sending reset");
+                }));
             }
             catch (Exception ee)
             {
-                Application.Current.Dispatcher.Invoke(new Action(() =>
+                try
                 {
-                    MessageBox.Show(ee.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }));
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        MessageBox.Show(ee.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }));
+                }
+                catch { }
+               
             }
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
